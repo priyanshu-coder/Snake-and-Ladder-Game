@@ -1,15 +1,16 @@
 package com.priyanshu.SnakeGame;
 import java.util.*;
 
-public class SnakeLadderBoard{
+public class SnakeLadderBoard extends GameComponent{
 
-    List<Integer> grid;
-    int winPoint;
+    private List<Integer> grid;
 
-
-    public SnakeLadderBoard(int winPoint, int size){
+    public SnakeLadderBoard(int size){
         grid = new ArrayList<Integer>(size + 1);
-        this.winPoint = winPoint;
-
     }
+
+    public int getGridSize(){
+        return grid.size();
+    }
+
 }

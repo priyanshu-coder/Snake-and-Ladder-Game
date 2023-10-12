@@ -8,7 +8,7 @@ class Main{
     public static void main(String[] args) {
 
         // initializing board with size and wining point
-        SnakeLadderBoard board = new SnakeLadderBoard(100,100);
+        SnakeLadderBoard board = new SnakeLadderBoard(100);
 
         // list of players participating in the game
         List<Player> players = new ArrayList<Player>();
@@ -32,18 +32,16 @@ class Main{
         int[] ladderStartPosition = {5,25,35,45};
         int[] ladderEndPosition =   {55,65,75,85};
 
-        GameComponent snake = new Snake();
-        GameComponent ladder = new Ladder();
 
         for(int i=0;i<snakeStartPosition.length;i++){
-            snake.initializeComponent(snakeStartPosition[i],snakeEndPosition[i]);
-            ladder.initializeComponent(ladderStartPosition[i], ladderEndPosition[i]);
+            board.initializeComponent(snakeStartPosition[i],snakeEndPosition[i]);
+            board.initializeComponent(ladderStartPosition[i], ladderEndPosition[i]);
         }
 
 
         //creating instance of game
 
-        Game game = new Game(players,board,snake,ladder);
+        Game game = new Game(players,board);
         game.start();
 
         scanner.close();

@@ -1,22 +1,20 @@
-
 package com.priyanshu.SnakeGame;
 import java.util.*;
 
 public class Game{
     
-    //aggregation
-    List<Player> playersList;
-    SnakeLadderBoard gameBoard;
-    Dice dice;
-    GameComponent snake;
-    GameComponent ladder;
+    private int winPoint;
 
-    Game(List<Player> playerList, SnakeLadderBoard gameBoard, GameComponent snake, GameComponent ladder){
+    //aggregation
+    private List<Player> playersList;
+    private SnakeLadderBoard gameBoard;
+    private Dice dice;
+
+    Game(List<Player> playerList, SnakeLadderBoard gameBoard){
         this.playersList = playerList;
         this.gameBoard = gameBoard;
         dice = new Dice();
-        this.snake = snake;
-        this.ladder = ladder;
+        winPoint = 100;
     }
 
     public void start(){
@@ -36,8 +34,8 @@ public class Game{
                 int newPosition = this.playerNewPosition(player, value);
 
                 //updating position of players after rolling dice
-                player.position = newPosition;
-
+                player.setPosition(newPosition);
+                System.out.println(player.getPosition() + " " + winPoint);
                 //checking if any player has reached the wining point
                 if(this.hasWon(player)){
                     flag = false;
@@ -53,8 +51,8 @@ public class Game{
     }
 
     public boolean hasWon(Player player){
-        if(player.position == gameBoard.winPoint){
-            System.out.println(player.name + " has Won the Game !!");
+        if(player.getPosition() == winPoint){
+            System.out.println(player.getName() + " has Won the Game !!");
             return true;
         }
 
@@ -63,21 +61,15 @@ public class Game{
 
     public int playerNewPosition(Player player, int diceValue){
         
-        int newPosition = player.position + diceValue;
+        int newPosition = player.getPosition() + diceValue;
 
-        if(newPosition > gameBoard.winPoint){
+        if(newPosition > winPoint){
             System.out.println("Invalid Throw");
-            return player.position; 
+            return player.getPosition(); 
         }
 
-        else if(snake.checkComponent(newPosition)!=0){
-            System.out.println("Snake Attack");
-            return newPosition+snake.checkComponent(newPosition);
-        }
-
-        else if(ladder.checkComponent(newPosition)!=0){
-            System.out.println("Found Ladder");
-            return newPosition+ladder.checkComponent(newPosition);
+        else if(gameBoard.checkComponent(newPosition)!=0){
+            return gameBoard.checkComponent(newPosition);
         }
 
         return newPosition;
